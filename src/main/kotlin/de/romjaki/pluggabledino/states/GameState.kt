@@ -21,6 +21,9 @@ class GameState : BasicGameState() {
         if (container!!.input.isKeyDown(Input.KEY_R)) {
             world = GameWorld()
         }
+        if (world.hurt) {
+            game!!.enterState(LOST)
+        }
         world.update(delta / 1000f, container.input)
         dinoAnimated.update(delta.toLong())
     }
@@ -34,11 +37,14 @@ class GameState : BasicGameState() {
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
         g.background = Color.lightGray
-        g.color = Color.red
+        if (world.hurt) {
+            g.background = Color.red
+        }
+        g.color = Color.green
         g.drawImage(dinoAnimated.currentFrame, world.dino.position.x * WIDTH / 50, world.dino.position.y * HEIGHT / 50 - dinoAnimated.height)
         g.drawImage(groundline, 0f, HEIGHT * 39 / 50f)
         for (cactus in world.cacti) {
-            g.drawImage(cactusImg, cactus.position.x, cactus.position.y)
+            g.drawImage(cactusImg, cactus.position.x * WIDTH / 50, cactus.position.y * HEIGHT / 50 - cactusImg.height)
         }
     }
 

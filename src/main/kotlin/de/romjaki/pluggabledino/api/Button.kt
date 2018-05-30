@@ -7,11 +7,11 @@ import de.romjaki.pluggabledino.font
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.Input
 import java.awt.Rectangle
-import kotlin.math.min
+import kotlin.math.max
 
 class Button(private val text: String, val x: Float, val y: Float) {
 
-    val width = min(buttonImage.width, font.getWidth(text) + 10)
+    val width = max(buttonImage.width, font.getWidth(text) + 10)
     val image = buttonImage.getScaledCopy(width, buttonImage.height)
 
     private var lastClicked = false

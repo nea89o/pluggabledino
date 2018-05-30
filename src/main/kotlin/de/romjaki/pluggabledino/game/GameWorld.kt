@@ -78,15 +78,22 @@ class GameWorld : ContactListener {
         //#endregion
 
         cactiBodyDef = BodyDef()
+        cactiBodyDef.type = BodyType.KINEMATIC
 
         createCactus()
     }
 
     fun createCactus() {
         val body = world.createBody(cactiBodyDef)
+        body.position.set(10f, 39f)
         val shape = PolygonShape()
         shape.setAsBox(1f, 1f)
-        body.createFixture(shape, 0f)
+        val cactiFixtureDef = FixtureDef()
+        cactiFixtureDef.shape = dinoBox
+        cactiFixtureDef.isSensor = true
+        cactiFixtureDef.density = 0.1f
+        cactiFixtureDef.friction = 0f
+        body.createFixture(cactiFixtureDef)
         cacti.add(body)
     }
 
@@ -97,6 +104,9 @@ class GameWorld : ContactListener {
                 print("Jump")
                 dino.applyForceToCenter(Vec2(0f, -2000f))
             }
+        }
+        cacti.forEach {
+            it.linearVelocity.set(-delta * 1000, 0f)
         }
         world.step(delta, 4, 3)
         world.setContactListener(this)

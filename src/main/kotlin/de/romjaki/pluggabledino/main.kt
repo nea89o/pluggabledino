@@ -5,10 +5,7 @@ import de.romjaki.pluggabledino.api.PluginLoader
 import de.romjaki.pluggabledino.events.InitEvent
 import de.romjaki.pluggabledino.events.PostInitEvent
 import de.romjaki.pluggabledino.events.PreInitEvent
-import de.romjaki.pluggabledino.states.GameState
-import de.romjaki.pluggabledino.states.MainMenu
-import de.romjaki.pluggabledino.states.SettingsState
-import de.romjaki.pluggabledino.states.SplashScreen
+import de.romjaki.pluggabledino.states.*
 import org.newdawn.slick.AppGameContainer
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Input
@@ -24,6 +21,7 @@ const val SPLASHSCREEN = 0
 const val MAINMENU = 1
 const val SETTINGS = 3
 const val GAME = 2
+const val LOST = 4
 
 fun main(args: Array<String>) {
     PluginLoader.loadPlugins()
@@ -45,5 +43,6 @@ class Application : StateBasedGame("Dino Game v$VERSION") {
         addState(MainMenu())
         addState(SettingsState())
         addState(GameState())
+        addState(LostState())
     }
 }
