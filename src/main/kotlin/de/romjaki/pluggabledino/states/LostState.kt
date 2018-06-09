@@ -32,6 +32,7 @@ class LostState : BasicGameState() {
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
+        g.scale(1.25f,1.25f)
         g.background = Color.lightGray
         back.draw(g)
         playAgain.draw(g)

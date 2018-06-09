@@ -14,6 +14,8 @@ import org.newdawn.slick.state.StateBasedGame
 
 const val WIDTH = 640
 const val HEIGHT = 480
+const val REAL_WIDTH = 800
+const val REAL_HEIGHT = 600
 const val FPS = 60
 const val VERSION = 1.0
 
@@ -27,7 +29,7 @@ fun main(args: Array<String>) {
     PluginLoader.loadPlugins()
     Input.disableControllers()
     val app = AppGameContainer(Application())
-    app.setDisplayMode(WIDTH, HEIGHT, false)
+    app.setDisplayMode(REAL_WIDTH, REAL_HEIGHT, false)
     app.setTargetFrameRate(FPS)
     app.setShowFPS(true)
     Events.broadcastEvent(PreInitEvent())

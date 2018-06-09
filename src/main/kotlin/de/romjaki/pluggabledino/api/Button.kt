@@ -59,7 +59,7 @@ class Button(private val text: String, val x: Float, val y: Float) {
     }
 
     fun isMouseOver(input: Input): Boolean =
-            rectangle.contains(input.mouseX, input.mouseY)
+            rectangle.contains(input.mouseX / 5 * 4, input.mouseY / 5 * 4)
 
 }
 
