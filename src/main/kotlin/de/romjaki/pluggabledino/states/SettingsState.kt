@@ -1,9 +1,6 @@
 package de.romjaki.pluggabledino.states
 
-import de.romjaki.pluggabledino.HEIGHT
-import de.romjaki.pluggabledino.MAINMENU
-import de.romjaki.pluggabledino.SETTINGS
-import de.romjaki.pluggabledino.WIDTH
+import de.romjaki.pluggabledino.*
 import de.romjaki.pluggabledino.api.Button
 import org.newdawn.slick.Color
 import org.newdawn.slick.GameContainer
@@ -35,7 +32,7 @@ class SettingsState : BasicGameState() {
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
-        g.scale(1.25f,1.25f)
+        g.scale(WIDTH_RATIO, HEIGHT_RATIO)
         g.background = Color.lightGray
         backButton.draw(g)
     }

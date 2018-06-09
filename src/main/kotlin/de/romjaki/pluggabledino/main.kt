@@ -16,6 +16,8 @@ const val WIDTH = 640
 const val HEIGHT = 480
 const val REAL_WIDTH = 800
 const val REAL_HEIGHT = 600
+const val WIDTH_RATIO = REAL_WIDTH.toFloat() / WIDTH
+const val HEIGHT_RATIO = REAL_HEIGHT.toFloat() / HEIGHT
 const val FPS = 60
 const val VERSION = 1.0
 

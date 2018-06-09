@@ -49,7 +49,7 @@ class MainMenu : BasicGameState() {
     val settingsButton = Button("SETTINGS", WIDTH / 2f, HEIGHT / 2f + 100)
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
-        g.scale(1.25f,1.25f)
+        g.scale(WIDTH_RATIO, HEIGHT_RATIO)
         g.background = Color.lightGray
         g.drawImage(dinoAnimated.currentFrame, WIDTH / 2f - 16, HEIGHT / 2f - 16f)
         playButton.draw(g)

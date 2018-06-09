@@ -32,7 +32,7 @@ class SplashScreen : BasicGameState() {
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
-        g.scale(1.25f,1.25f)
+        g.scale(WIDTH_RATIO, HEIGHT_RATIO)
         g.drawImage(splash, 0f, 0f)
         g.drawStringCentered("CLICK ANYWHERE TO CONTINUE", WIDTH / 2f, HEIGHT / 2f)
     }

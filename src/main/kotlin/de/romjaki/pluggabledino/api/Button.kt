@@ -1,9 +1,6 @@
 package de.romjaki.pluggabledino.api
 
-import de.romjaki.pluggabledino.buttonImage
-import de.romjaki.pluggabledino.drawImageCentered
-import de.romjaki.pluggabledino.drawStringCentered
-import de.romjaki.pluggabledino.font
+import de.romjaki.pluggabledino.*
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.Input
 import java.awt.Rectangle
@@ -59,7 +56,7 @@ class Button(private val text: String, val x: Float, val y: Float) {
     }
 
     fun isMouseOver(input: Input): Boolean =
-            rectangle.contains(input.mouseX / 5 * 4, input.mouseY / 5 * 4)
+            rectangle.contains((input.mouseX / WIDTH_RATIO).toInt(), (input.mouseY / HEIGHT_RATIO).toInt())
 
 }
 
