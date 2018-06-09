@@ -36,7 +36,7 @@ class GameState : BasicGameState() {
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
         g!!
-        g.background = Color.lightGray
+        g.background = Color.white
         if (world.hurt) {
             g.background = Color.red
         }

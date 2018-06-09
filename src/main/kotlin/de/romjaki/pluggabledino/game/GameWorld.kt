@@ -85,7 +85,7 @@ class GameWorld : ContactListener {
 
     fun createCactus() {
         val body = world.createBody(cactiBodyDef)
-        body.position.set(10f, 39f)
+        body.position.set(20f, 39f)
         val shape = PolygonShape()
         shape.setAsBox(1f, 1f)
         val cactiFixtureDef = FixtureDef()
