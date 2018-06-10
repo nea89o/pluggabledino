@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.*
 import org.jbox2d.dynamics.contacts.Contact
 import org.newdawn.slick.Input
+import java.util.Random
 
 class GameWorld : ContactListener {
     override fun endContact(contact: Contact?) {
@@ -34,9 +35,13 @@ class GameWorld : ContactListener {
 
     val cacti = mutableListOf<Body>()
 
+    var delay = 0f
+
     val cactiBodyDef: BodyDef
 
     val groundBody: Body
+
+    val random = Random()
 
     val dino: Body
 
@@ -51,7 +56,7 @@ class GameWorld : ContactListener {
     val dinoFixtureDef: FixtureDef
 
     init {
-        val gravity = Vec2(0f, 10f)
+        val gravity = Vec2(0f, 40f)
         world = World(gravity)
 
         //#region GROUND
@@ -80,12 +85,17 @@ class GameWorld : ContactListener {
         cactiBodyDef = BodyDef()
         cactiBodyDef.type = BodyType.KINEMATIC
 
-        createCactus()
+        createCactus1()
     }
 
-    fun createCactus() {
+    fun rand(from: Int, to: Int): Int {
+        return random.nextInt(to - from) + from
+    }
+
+    fun createCactus1() {
+
         val body = world.createBody(cactiBodyDef)
-        body.position.set(20f, 39f)
+        body.position.set(100f, 39f)
         val shape = PolygonShape()
         shape.setAsBox(1f, 1f)
         val cactiFixtureDef = FixtureDef()
@@ -95,6 +105,8 @@ class GameWorld : ContactListener {
         cactiFixtureDef.friction = 0f
         body.createFixture(cactiFixtureDef)
         cacti.add(body)
+
+
     }
 
 
@@ -102,8 +114,15 @@ class GameWorld : ContactListener {
         if (input.isKeyDown(Input.KEY_UP)) {
             if (isDinoOnGround()) {
                 print("Jump")
-                dino.applyForceToCenter(Vec2(0f, -2000f))
+                dino.applyForceToCenter(Vec2(0f, -4250f))
             }
+        }
+        delay -= delta
+        if (delay < 0) {
+
+            createCactus1()
+            delay = random.nextFloat() + rand(1, 3)-0.5f
+
         }
         cacti.forEach {
             it.linearVelocity.set(-delta * 1000, 0f)
