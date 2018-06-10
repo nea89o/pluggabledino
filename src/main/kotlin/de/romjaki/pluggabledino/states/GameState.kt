@@ -15,9 +15,11 @@ class GameState : BasicGameState() {
 
     override fun enter(container: GameContainer?, game: StateBasedGame?) {
         world = GameWorld()
+        count = 0
     }
 
     override fun update(container: GameContainer?, game: StateBasedGame?, delta: Int) {
+        count += delta
         if (container!!.input.isKeyDown(Input.KEY_R)) {
             world = GameWorld()
         }
@@ -30,13 +32,19 @@ class GameState : BasicGameState() {
 
     lateinit var world: GameWorld
 
+    var count: Int = 0
+
     override fun getID(): Int =
             GAME
 
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
+
+
         g!!
+
         g.scale(WIDTH_RATIO, HEIGHT_RATIO)
+        g.drawStringCentered((count / 100).toString(), WIDTH / 2f, HEIGHT / 2f)
         g.background = Color.white
         if (world.hurt) {
             g.background = Color.red
