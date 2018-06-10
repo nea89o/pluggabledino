@@ -35,7 +35,7 @@ class GameWorld : ContactListener {
 
     val cacti = mutableListOf<Body>()
 
-    var i = 0
+    var delay = 0f
 
     val cactiBodyDef: BodyDef
 
@@ -56,7 +56,7 @@ class GameWorld : ContactListener {
     val dinoFixtureDef: FixtureDef
 
     init {
-        val gravity = Vec2(0f, 10f)
+        val gravity = Vec2(0f, 40f)
         world = World(gravity)
 
         //#region GROUND
@@ -85,29 +85,28 @@ class GameWorld : ContactListener {
         cactiBodyDef = BodyDef()
         cactiBodyDef.type = BodyType.KINEMATIC
 
-        createCactus()
+        createCactus1()
     }
 
-    fun rand(from: Int, to: Int) : Int {
+    fun rand(from: Int, to: Int): Int {
         return random.nextInt(to - from) + from
     }
 
-    fun createCactus() {
-while (i<100) {
-    i++
-    val body = world.createBody(cactiBodyDef)
-    body.position.set(i*30f+rand(30, to = 40), 39f)
-    val shape = PolygonShape()
-    shape.setAsBox(1f, 1f)
-    val cactiFixtureDef = FixtureDef()
-    cactiFixtureDef.shape = dinoBox
-    cactiFixtureDef.isSensor = true
-    cactiFixtureDef.density = 0.1f
-    cactiFixtureDef.friction = 0f
-    body.createFixture(cactiFixtureDef)
-    cacti.add(body)
-    
-}
+    fun createCactus1() {
+
+        val body = world.createBody(cactiBodyDef)
+        body.position.set(100f, 39f)
+        val shape = PolygonShape()
+        shape.setAsBox(1f, 1f)
+        val cactiFixtureDef = FixtureDef()
+        cactiFixtureDef.shape = dinoBox
+        cactiFixtureDef.isSensor = true
+        cactiFixtureDef.density = 0.1f
+        cactiFixtureDef.friction = 0f
+        body.createFixture(cactiFixtureDef)
+        cacti.add(body)
+
+
     }
 
 
@@ -115,8 +114,15 @@ while (i<100) {
         if (input.isKeyDown(Input.KEY_UP)) {
             if (isDinoOnGround()) {
                 print("Jump")
-                dino.applyForceToCenter(Vec2(0f, -2000f))
+                dino.applyForceToCenter(Vec2(0f, -4250f))
             }
+        }
+        delay -= delta
+        if (delay < 0) {
+
+            createCactus1()
+            delay = random.nextFloat() + rand(1, 3)-0.5f
+
         }
         cacti.forEach {
             it.linearVelocity.set(-delta * 1000, 0f)
