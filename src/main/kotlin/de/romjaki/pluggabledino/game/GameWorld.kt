@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.*
 import org.jbox2d.dynamics.contacts.Contact
 import org.newdawn.slick.Input
+import java.util.Random
 
 class GameWorld : ContactListener {
     override fun endContact(contact: Contact?) {
@@ -34,9 +35,13 @@ class GameWorld : ContactListener {
 
     val cacti = mutableListOf<Body>()
 
+    var i = 0
+
     val cactiBodyDef: BodyDef
 
     val groundBody: Body
+
+    val random = Random()
 
     val dino: Body
 
@@ -83,18 +88,26 @@ class GameWorld : ContactListener {
         createCactus()
     }
 
+    fun rand(from: Int, to: Int) : Int {
+        return random.nextInt(to - from) + from
+    }
+
     fun createCactus() {
-        val body = world.createBody(cactiBodyDef)
-        body.position.set(20f, 39f)
-        val shape = PolygonShape()
-        shape.setAsBox(1f, 1f)
-        val cactiFixtureDef = FixtureDef()
-        cactiFixtureDef.shape = dinoBox
-        cactiFixtureDef.isSensor = true
-        cactiFixtureDef.density = 0.1f
-        cactiFixtureDef.friction = 0f
-        body.createFixture(cactiFixtureDef)
-        cacti.add(body)
+while (i<100) {
+    i++
+    val body = world.createBody(cactiBodyDef)
+    body.position.set(i*30f+rand(30, to = 40), 39f)
+    val shape = PolygonShape()
+    shape.setAsBox(1f, 1f)
+    val cactiFixtureDef = FixtureDef()
+    cactiFixtureDef.shape = dinoBox
+    cactiFixtureDef.isSensor = true
+    cactiFixtureDef.density = 0.1f
+    cactiFixtureDef.friction = 0f
+    body.createFixture(cactiFixtureDef)
+    cacti.add(body)
+    
+}
     }
 
 
