@@ -26,6 +26,8 @@ const val MAINMENU = 1
 const val SETTINGS = 3
 const val GAME = 2
 const val LOST = 4
+var lastscore  = 0
+var highscore = 0
 
 fun main(args: Array<String>) {
     PluginLoader.loadPlugins()

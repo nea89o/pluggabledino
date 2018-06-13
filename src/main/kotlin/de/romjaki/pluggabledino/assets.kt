@@ -26,3 +26,5 @@ val buttonImage = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/
 val groundline = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/groundline.png")))
 
 val cactusImg = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/cactus.png")))
+
+val BirdImg= Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/bird1.png")))
