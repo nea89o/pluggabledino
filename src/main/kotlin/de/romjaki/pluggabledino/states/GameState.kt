@@ -16,7 +16,7 @@ class GameState : BasicGameState() {
     override fun enter(container: GameContainer?, game: StateBasedGame?) {
         world = GameWorld()
         count = 0
-    }
+}
 
     override fun update(container: GameContainer?, game: StateBasedGame?, delta: Int) {
         count += delta
@@ -24,6 +24,12 @@ class GameState : BasicGameState() {
             world = GameWorld()
         }
         if (world.hurt) {
+            lastscore = count / 100
+            if(lastscore > highscore){
+
+                highscore = lastscore
+
+            }
             game!!.enterState(LOST)
         }
         world.update(delta / 1000f, container.input)

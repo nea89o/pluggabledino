@@ -34,6 +34,17 @@ class LostState : BasicGameState() {
         g!!
         g.scale(WIDTH_RATIO, HEIGHT_RATIO)
         g.background = Color.lightGray
+        g.drawStringCentered(lastscore.toString(), WIDTH / 2f, HEIGHT /2f )
+        g.drawStringCentered("Score:", WIDTH / 2f , HEIGHT / 2f - 40f  )
+        if(lastscore > highscore ) {
+            g.drawStringCentered("NEUER HIGHSCORE:" + highscore, WIDTH / 2f, HEIGHT / 2f - 70f)
+        }
+        else {
+
+              g.drawStringCentered("Highscore:" + highscore, WIDTH / 2f, HEIGHT / 2f - 70f)
+
+        }
+
         back.draw(g)
         playAgain.draw(g)
     }

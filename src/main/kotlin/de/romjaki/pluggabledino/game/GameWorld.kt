@@ -121,7 +121,7 @@ class GameWorld : ContactListener {
         if (delay < 0) {
 
             createCactus1()
-            delay = random.nextFloat() + rand(1, 3)-0.5f
+            delay = random.nextFloat() + rand(2, 3)-0.5f
 
         }
         cacti.forEach {
