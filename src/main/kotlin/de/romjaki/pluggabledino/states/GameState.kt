@@ -16,20 +16,17 @@ class GameState : BasicGameState() {
     override fun enter(container: GameContainer?, game: StateBasedGame?) {
         world = GameWorld()
         count = 0
+
 }
 
     override fun update(container: GameContainer?, game: StateBasedGame?, delta: Int) {
         count += delta
+
         if (container!!.input.isKeyDown(Input.KEY_R)) {
             world = GameWorld()
         }
         if (world.hurt) {
             lastscore = count / 100
-            if(lastscore > highscore){
-
-                highscore = lastscore
-
-            }
             game!!.enterState(LOST)
         }
         world.update(delta / 1000f, container.input)
@@ -61,6 +58,7 @@ class GameState : BasicGameState() {
         for (cactus in world.cacti) {
             g.drawImage(cactusImg, cactus.position.x * WIDTH / 50, cactus.position.y * HEIGHT / 50 - cactusImg.height)
         }
-    }
+
+           }
 
 }
