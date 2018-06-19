@@ -1,5 +1,7 @@
 package de.romjaki.pluggabledino.game
 
+import de.romjaki.pluggabledino.highscore
+import de.romjaki.pluggabledino.score
 import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
@@ -20,6 +22,7 @@ class GameWorld : ContactListener {
         val bodies = listOf(contact.fixtureA.body, contact.fixtureB.body)
         if (bodies.contains(dino) && cacti.any { bodies.contains(it) }) {
             hurt = true
+
         }
     }
 
@@ -35,13 +38,15 @@ class GameWorld : ContactListener {
 
     val cacti = mutableListOf<Body>()
 
-    var delay = 0f
-
     val cactiBodyDef: BodyDef
+
+    var speed = 1000
 
     val groundBody: Body
 
     val random = Random()
+
+    var delay = 0f
 
     val dino: Body
 
@@ -105,6 +110,7 @@ class GameWorld : ContactListener {
         cactiFixtureDef.friction = 0f
         body.createFixture(cactiFixtureDef)
         cacti.add(body)
+        speed += 20
 
 
     }
@@ -118,15 +124,20 @@ class GameWorld : ContactListener {
             }
         }
         delay -= delta
-        if (delay < 0) {
+
+            if (delay < 0) {
 
             createCactus1()
-            delay = random.nextFloat() + rand(2, 3)-0.5f
+                delay = random.nextFloat() + rand(2, 3)
+        }
 
-        }
+
+
+
         cacti.forEach {
-            it.linearVelocity.set(-delta * 1000, 0f)
+            it.linearVelocity.set(-delta * speed, 0f)
         }
+
         world.step(delta, 4, 3)
         world.setContactListener(this)
     }

@@ -12,9 +12,21 @@ class LostState : BasicGameState() {
     override fun init(container: GameContainer?, game: StateBasedGame?) {
         game!!
         playAgain.addClickHandler {
+
+            if(lastscore > highscore){
+
+                highscore = lastscore
+
+            }
             game.enterState(GAME)
         }
         back.addClickHandler {
+
+            if(lastscore > highscore){
+
+                highscore = lastscore
+
+            }
             game.enterState(MAINMENU)
         }
     }
@@ -37,11 +49,11 @@ class LostState : BasicGameState() {
         g.drawStringCentered(lastscore.toString(), WIDTH / 2f, HEIGHT /2f )
         g.drawStringCentered("Score:", WIDTH / 2f , HEIGHT / 2f - 40f  )
         if(lastscore > highscore ) {
-            g.drawStringCentered("NEUER HIGHSCORE:" + highscore, WIDTH / 2f, HEIGHT / 2f - 70f)
+            g.drawStringCentered("NEUER HIGHSCORE:" + lastscore, WIDTH / 2f, HEIGHT / 2f - 70f)
         }
         else {
 
-              g.drawStringCentered("Highscore:" + highscore, WIDTH / 2f, HEIGHT / 2f - 70f)
+            g.drawStringCentered("Highscore:" + highscore, WIDTH / 2f, HEIGHT / 2f - 70f)
 
         }
 

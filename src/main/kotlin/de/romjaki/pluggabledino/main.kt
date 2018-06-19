@@ -28,6 +28,7 @@ const val GAME = 2
 const val LOST = 4
 var lastscore  = 0
 var highscore = 0
+var score = 0
 
 fun main(args: Array<String>) {
     PluginLoader.loadPlugins()
