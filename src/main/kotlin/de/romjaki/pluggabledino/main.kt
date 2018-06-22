@@ -26,11 +26,14 @@ const val MAINMENU = 1
 const val SETTINGS = 3
 const val GAME = 2
 const val LOST = 4
-var lastscore  = 0
+var lastscore = 0
 var highscore = 0
 var score = 0
 
 fun main(args: Array<String>) {
+    if (args.size > 1 && args[0] == "dev") {
+        PluginLoader.loadDevPlugin(args[1])
+    }
     PluginLoader.loadPlugins()
     Input.disableControllers()
     val app = AppGameContainer(Application())

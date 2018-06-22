@@ -1,7 +1,5 @@
 package de.romjaki.pluggabledino.game
 
-import de.romjaki.pluggabledino.highscore
-import de.romjaki.pluggabledino.score
 import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
@@ -10,7 +8,7 @@ import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.*
 import org.jbox2d.dynamics.contacts.Contact
 import org.newdawn.slick.Input
-import java.util.Random
+import java.util.*
 
 class GameWorld : ContactListener {
     override fun endContact(contact: Contact?) {
@@ -118,21 +116,15 @@ class GameWorld : ContactListener {
 
     fun update(delta: Float, input: Input) {
         if (input.isKeyDown(Input.KEY_UP)) {
-            if (isDinoOnGround()) {
-                print("Jump")
-                dino.applyForceToCenter(Vec2(0f, -4250f))
-            }
+            tryJump();
         }
         delay -= delta
 
-            if (delay < 0) {
+        if (delay < 0) {
 
             createCactus1()
-                delay = random.nextFloat() + rand(2, 3)
+            delay = random.nextFloat() + rand(2, 3)
         }
-
-
-
 
         cacti.forEach {
             it.linearVelocity.set(-delta * speed, 0f)
@@ -140,6 +132,12 @@ class GameWorld : ContactListener {
 
         world.step(delta, 4, 3)
         world.setContactListener(this)
+    }
+
+    fun tryJump() {
+        if (isDinoOnGround()) {
+            dino.applyForceToCenter(Vec2(0f, -4250f))
+        }
     }
 
     private fun isDinoOnGround(): Boolean =

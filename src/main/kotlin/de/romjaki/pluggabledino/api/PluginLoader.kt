@@ -12,6 +12,8 @@ object PluginLoader {
     private val klaxon = Klaxon()
     private const val pluginFolder = "plugins"
 
+    private var devPlugin: String? = null
+
     val plugins
         get() = _plugins.toMap()
 
@@ -22,15 +24,20 @@ object PluginLoader {
                 Scanner(
                         cl.getResourceAsStream("plugin.json"))
                         .useDelimiter("\\A")
-                        .next())!!
-        val pluginClass = cl.loadClass(pluginInfo.clazz)
+                        .next()) ?: throw PluginMetaMissingException(url.toString())
+        return loadPlugin(pluginInfo, cl.loadClass(pluginInfo.clazz))
+    }
+
+    private fun loadPlugin(pluginInfo: PluginMeta, pluginClass: Class<*>): IPlugin? {
         if (!IPlugin::class.java.isAssignableFrom(pluginClass)) {
             return null
         }
         val plugin = pluginClass.newInstance() as IPlugin
         plugin.meta = pluginInfo
         _plugins[pluginInfo.name] = plugin
+
         return plugin
+
     }
 
     private fun checkDependencies() {
@@ -56,8 +63,24 @@ object PluginLoader {
                 .map {
                     it.toURI().toURL()
                 }.forEach { loadPlugin(it) }
+        installDevPlugin()
         checkDependencies()
         injectDependencies()
+    }
+
+    private fun installDevPlugin() {
+        if (devPlugin == null) {
+            return
+        }
+        val clazz = Class.forName(devPlugin)
+        val meta = klaxon.parse<PluginMeta>(
+                Scanner(
+                        clazz
+                                .classLoader
+                                .getResourceAsStream("plugin.json"))
+                        .useDelimiter("\\A")
+                        .next()) ?: throw PluginMetaMissingException("<dev>")
+        loadPlugin(meta, clazz)
     }
 
 
@@ -72,5 +95,9 @@ object PluginLoader {
                 }
             }
         }
+    }
+
+    fun loadDevPlugin(className: String) {
+        devPlugin = className
     }
 }

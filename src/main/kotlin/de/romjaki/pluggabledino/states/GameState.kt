@@ -1,6 +1,10 @@
 package de.romjaki.pluggabledino.states
 
 import de.romjaki.pluggabledino.*
+import de.romjaki.pluggabledino.api.Events
+import de.romjaki.pluggabledino.events.GameLostEvent
+import de.romjaki.pluggabledino.events.GameRenderEvent
+import de.romjaki.pluggabledino.events.GameUpdateEvent
 import de.romjaki.pluggabledino.game.GameWorld
 import org.newdawn.slick.Color
 import org.newdawn.slick.GameContainer
@@ -16,10 +20,10 @@ class GameState : BasicGameState() {
     override fun enter(container: GameContainer?, game: StateBasedGame?) {
         world = GameWorld()
         count = 0
-
-}
+    }
 
     override fun update(container: GameContainer?, game: StateBasedGame?, delta: Int) {
+        game!!
         count += delta
 
         if (container!!.input.isKeyDown(Input.KEY_R)) {
@@ -27,10 +31,12 @@ class GameState : BasicGameState() {
         }
         if (world.hurt) {
             lastscore = count / 100
-            game!!.enterState(LOST)
+            Events.broadcastEvent(GameLostEvent(lastscore))
+            return game.enterState(LOST)
         }
         world.update(delta / 1000f, container.input)
         dinoAnimated.update(delta.toLong())
+        Events.broadcastEvent(GameUpdateEvent(game, delta, container, world))
     }
 
     lateinit var world: GameWorld
@@ -42,9 +48,9 @@ class GameState : BasicGameState() {
 
 
     override fun render(container: GameContainer?, game: StateBasedGame?, g: Graphics?) {
-
-
         g!!
+        container!!
+        game!!
 
         g.scale(WIDTH_RATIO, HEIGHT_RATIO)
         g.drawStringCentered((count / 100).toString(), WIDTH / 2f, HEIGHT / 2f)
@@ -59,6 +65,8 @@ class GameState : BasicGameState() {
             g.drawImage(cactusImg, cactus.position.x * WIDTH / 50, cactus.position.y * HEIGHT / 50 - cactusImg.height)
         }
 
-           }
+        Events.broadcastEvent(GameRenderEvent(g, game, container))
+
+    }
 
 }
