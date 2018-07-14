@@ -64,7 +64,9 @@ class GameState : BasicGameState() {
         for (cactus in world.cacti) {
             g.drawImage(cactusImg, cactus.position.x * WIDTH / 50, cactus.position.y * HEIGHT / 50 - cactusImg.height)
         }
-
+        for (bird in world.birdd) {
+            g.drawImage(BirdImg, bird.position.x * WIDTH / 50, bird.position.y * HEIGHT / 50 - BirdImg.height)
+        }
         Events.broadcastEvent(GameRenderEvent(g, game, container))
 
     }

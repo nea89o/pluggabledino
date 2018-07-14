@@ -1,5 +1,7 @@
 package de.romjaki.pluggabledino.game
 
+
+
 import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
@@ -22,6 +24,10 @@ class GameWorld : ContactListener {
             hurt = true
 
         }
+        else if (bodies.contains(dino) && birdd.any { bodies.contains(it) }) {
+            hurt = true
+
+        }
     }
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {
@@ -38,6 +44,10 @@ class GameWorld : ContactListener {
 
     val cactiBodyDef: BodyDef
 
+    val birdd = mutableListOf<Body>()
+
+    val birddBodyDef: BodyDef
+
     var speed = 1000
 
     val groundBody: Body
@@ -45,6 +55,8 @@ class GameWorld : ContactListener {
     val random = Random()
 
     var delay = 0f
+
+    var bg = 0f
 
     val dino: Body
 
@@ -88,12 +100,43 @@ class GameWorld : ContactListener {
         cactiBodyDef = BodyDef()
         cactiBodyDef.type = BodyType.KINEMATIC
 
+        birddBodyDef = BodyDef()
+        birddBodyDef.type = BodyType.KINEMATIC
+
         createCactus1()
+        createBird1()
     }
+
+
+
+
+
 
     fun rand(from: Int, to: Int): Int {
         return random.nextInt(to - from) + from
     }
+
+    fun createBird1(){
+
+
+
+        val body = world.createBody(birddBodyDef)
+        body.position.set(50f, 33f)
+        val shape = PolygonShape()
+        shape.setAsBox(1f, 1f)
+        val birddFixtureDef = FixtureDef()
+        birddFixtureDef.shape = dinoBox
+        birddFixtureDef.isSensor = true
+        birddFixtureDef.density = 0.1f
+        birddFixtureDef.friction = 0f
+        body.createFixture(birddFixtureDef)
+        birdd.add(body)
+        speed += 0
+
+    }
+
+
+
 
     fun createCactus1() {
 
@@ -116,17 +159,28 @@ class GameWorld : ContactListener {
 
     fun update(delta: Float, input: Input) {
         if (input.isKeyDown(Input.KEY_UP)) {
-            tryJump();
+            tryJump()
         }
         delay -= delta
+        bg -= delta
 
         if (delay < 0) {
 
             createCactus1()
+
             delay = random.nextFloat() + rand(2, 3)
         }
 
+        if (bg < -5) {
+
+
+            createBird1()
+            bg =  random.nextFloat() + rand(1, 2)
+        }
         cacti.forEach {
+            it.linearVelocity.set(-delta * speed, 0f)
+        }
+        birdd.forEach {
             it.linearVelocity.set(-delta * speed, 0f)
         }
 
