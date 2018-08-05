@@ -1,7 +1,6 @@
 package de.romjaki.pluggabledino.game
 
 
-
 import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
@@ -23,10 +22,8 @@ class GameWorld : ContactListener {
         if (bodies.contains(dino) && cacti.any { bodies.contains(it) }) {
             hurt = true
 
-        }
-        else if (bodies.contains(dino) && birdd.any { bodies.contains(it) }) {
+        } else if (bodies.contains(dino) && birdd.any { bodies.contains(it) }) {
             hurt = true
-
         }
     }
 
@@ -108,16 +105,11 @@ class GameWorld : ContactListener {
     }
 
 
-
-
-
-
     fun rand(from: Int, to: Int): Int {
         return random.nextInt(to - from) + from
     }
 
-    fun createBird1(){
-
+    fun createBird1() {
 
 
         val body = world.createBody(birddBodyDef)
@@ -134,8 +126,6 @@ class GameWorld : ContactListener {
         speed += 0
 
     }
-
-
 
 
     fun createCactus1() {
@@ -175,7 +165,7 @@ class GameWorld : ContactListener {
 
 
             createBird1()
-            bg =  random.nextFloat() + rand(1, 2)
+            bg = random.nextFloat() + rand(1, 2)
         }
         cacti.forEach {
             it.linearVelocity.set(-delta * speed, 0f)

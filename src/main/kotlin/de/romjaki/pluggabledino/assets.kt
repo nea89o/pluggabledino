@@ -1,9 +1,6 @@
 package de.romjaki.pluggabledino
 
-import org.newdawn.slick.Animation
-import org.newdawn.slick.Image
-import org.newdawn.slick.SpriteSheet
-import org.newdawn.slick.UnicodeFont
+import org.newdawn.slick.*
 import org.newdawn.slick.opengl.TextureLoader
 import java.awt.Font
 import java.io.FileInputStream
@@ -27,4 +24,6 @@ val groundline = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/i
 
 val cactusImg = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/cactus.png")))
 
-val BirdImg= Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/bird1.png")))
+val BirdImg = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/bird1.png")))
+
+val anthemSound = Music(FileInputStream("assets/audio/anthem.ogg"), "anthem.ogg")
