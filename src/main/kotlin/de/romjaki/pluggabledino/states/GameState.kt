@@ -19,7 +19,12 @@ class GameState : BasicGameState() {
 
     override fun enter(container: GameContainer?, game: StateBasedGame?) {
         world = GameWorld()
+        anthemSound.loop()
         count = 0
+    }
+
+    override fun leave(container: GameContainer?, game: StateBasedGame?) {
+        anthemSound.pause()
     }
 
     override fun update(container: GameContainer?, game: StateBasedGame?, delta: Int) {
