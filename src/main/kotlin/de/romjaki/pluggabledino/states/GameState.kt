@@ -64,6 +64,7 @@ class GameState : BasicGameState() {
             g.background = Color.red
         }
         g.color = Color.green
+        g.drawImage(background, 0f, 0f)
         g.drawImage(dinoAnimated.currentFrame, world.dino.position.x * WIDTH / 50, world.dino.position.y * HEIGHT / 50 - dinoAnimated.height)
         g.drawImage(groundline, 0f, HEIGHT * 39 / 50f)
         for (cactus in world.cacti) {

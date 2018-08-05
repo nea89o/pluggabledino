@@ -27,3 +27,5 @@ val cactusImg = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/im
 val BirdImg = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/bird1.png")))
 
 val anthemSound = Music(FileInputStream("assets/audio/anthem.ogg"), "anthem.ogg")
+
+val background = Image(TextureLoader.getTexture("PNG", FileInputStream("assets/images/background.png")))
