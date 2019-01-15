@@ -8,7 +8,10 @@ import kotlin.math.max
 
 typealias ChangeListener = (index: Int) -> Unit
 
-class ToggleButton(private val texts: List<String>, val x: Float, val y: Float) {
+class ToggleButton(private val texts: List<String>, val x: Float, val y: Float) : SettingsElement {
+    override fun render(g: Graphics) {
+        draw(g)
+    }
 
     val width = max(buttonImage.width, texts.map { font.getWidth(it) + 10 }.max()!!)
     val image = buttonImage.getScaledCopy(width, buttonImage.height)
@@ -43,14 +46,14 @@ class ToggleButton(private val texts: List<String>, val x: Float, val y: Float) 
     override fun toString(): String =
             "X: $leftX - $rightX, $topY - $bottomY, width=$width"
 
-    fun enter() {
+    override fun enter() {
         lastClicked = true
     }
 
     fun isClicked(input: Input): Boolean =
             input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && isMouseOver(input)
 
-    fun update(input: Input) {
+    override fun update(input: Input) {
         val ret = isClicked(input)
         if (!lastClicked && ret) {
             index = (index + 1) % texts.size
