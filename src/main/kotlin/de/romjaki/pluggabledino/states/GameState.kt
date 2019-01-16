@@ -39,7 +39,8 @@ class GameState : BasicGameState() {
             Events.broadcastEvent(GameLostEvent(lastscore))
             return game.enterState(LOST)
         }
-        world.update(delta / 1000f, container.input)
+        println(delta)
+        world.update(delta / 1000f, container.input.isKeyDown(Input.KEY_UP))
         dinoAnimated.update(delta.toLong())
         Events.broadcastEvent(GameUpdateEvent(game, delta, container, world))
     }
@@ -58,13 +59,13 @@ class GameState : BasicGameState() {
         game!!
 
         g.scale(WIDTH_RATIO, HEIGHT_RATIO)
-        g.drawStringCentered((count / 100).toString(), WIDTH / 2f, HEIGHT / 2f)
         g.background = Color.white
         if (world.hurt) {
             g.background = Color.red
         }
         g.color = Color.green
         g.drawImage(background, 0f, 0f)
+        g.drawStringCentered((count / 100).toString(), WIDTH / 2f, HEIGHT / 2f)
         g.drawImage(dinoAnimated.currentFrame, world.dino.position.x * WIDTH / 50, world.dino.position.y * HEIGHT / 50 - dinoAnimated.height)
         g.drawImage(groundline, 0f, HEIGHT * 39 / 50f)
         for (cactus in world.cacti) {

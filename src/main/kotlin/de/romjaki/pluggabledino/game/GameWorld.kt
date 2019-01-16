@@ -147,8 +147,8 @@ class GameWorld : ContactListener {
     }
 
 
-    fun update(delta: Float, input: Input) {
-        if (input.isKeyDown(Input.KEY_UP)) {
+    fun update(delta: Float, tryJump: Boolean) {
+        if (tryJump) {
             tryJump()
         }
         delay -= delta
