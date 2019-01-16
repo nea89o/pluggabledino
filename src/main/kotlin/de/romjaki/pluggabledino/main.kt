@@ -1,6 +1,5 @@
 package de.romjaki.pluggabledino
 
-import de.romjaki.pluggabledino.api.Emulator
 import de.romjaki.pluggabledino.api.Events
 import de.romjaki.pluggabledino.api.PluginLoader
 import de.romjaki.pluggabledino.events.InitEvent
@@ -32,7 +31,6 @@ var highscore = 0
 var score = 0
 
 fun main(args: Array<String>) {
-    println(Emulator.emulate(16f) { true })
     if (args.size > 1 && args[0] == "dev") {
         PluginLoader.loadDevPlugin(args[1])
     }
