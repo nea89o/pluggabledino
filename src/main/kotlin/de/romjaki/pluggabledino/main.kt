@@ -42,9 +42,9 @@ fun main(args: Array<String>) {
     app.setDisplayMode(REAL_WIDTH, REAL_HEIGHT, false)
     app.setTargetFrameRate(FPS)
     app.setShowFPS(true)
-    Events.broadcastEvent(PreInitEvent())
-    Events.broadcastEvent(InitEvent())
-    Events.broadcastEvent(PostInitEvent())
+    Events.broadcastEvent(PreInitEvent(app))
+    Events.broadcastEvent(InitEvent(app))
+    Events.broadcastEvent(PostInitEvent(app))
     app.start()
 
 }

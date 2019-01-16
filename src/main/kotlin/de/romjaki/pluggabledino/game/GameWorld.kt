@@ -170,8 +170,15 @@ class GameWorld : ContactListener {
         cacti.forEach {
             it.linearVelocity.set(-delta * speed, 0f)
         }
+        cacti.removeIf {
+            it.position.x < 0
+        }
+
         birdd.forEach {
             it.linearVelocity.set(-delta * speed, 0f)
+        }
+        cacti.removeIf {
+            it.position.x < 0
         }
 
         world.step(delta, 4, 3)

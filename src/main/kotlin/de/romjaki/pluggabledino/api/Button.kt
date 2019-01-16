@@ -6,7 +6,10 @@ import org.newdawn.slick.Input
 import java.awt.Rectangle
 import kotlin.math.max
 
-class Button(private val text: String, val x: Float, val y: Float) {
+class Button(private val text: String, val x: Float, val y: Float) : SettingsElement {
+    override fun render(g: Graphics) {
+        draw(g)
+    }
 
     val width = max(buttonImage.width, font.getWidth(text) + 10)
     val image = buttonImage.getScaledCopy(width, buttonImage.height)
@@ -40,14 +43,14 @@ class Button(private val text: String, val x: Float, val y: Float) {
     override fun toString(): String =
             "X: $leftX - $rightX, $topY - $bottomY, width=$width"
 
-    fun enter() {
+    override fun enter() {
         lastClicked = true
     }
 
     fun isClicked(input: Input): Boolean =
             input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && isMouseOver(input)
 
-    fun update(input: Input) {
+    override fun update(input: Input) {
         val ret = isClicked(input)
         if (!lastClicked && ret) {
             clickHandlers.forEach({ it() })
