@@ -29,8 +29,9 @@ const val LOST = 4
 var lastscore = 0
 var highscore = 0
 var score = 0
-val settings = SettingsState()
+var eventThreads: MutableList<Thread> = mutableListOf()
 
+lateinit var settings: SettingsState
 fun main(args: Array<String>) {
     if (args.size > 1 && args[0] == "dev") {
         PluginLoader.loadDevPlugin(args[1])
@@ -42,8 +43,10 @@ fun main(args: Array<String>) {
     app.setTargetFrameRate(FPS)
     app.setShowFPS(true)
     Events.broadcastEvent(PreInitEvent(app))
-    Events.broadcastEvent(InitEvent(app, settings))
-    Events.broadcastEvent(PostInitEvent(app))
+    eventThreads.add(Thread {
+        Events.broadcastEvent(InitEvent(app, settings))
+        Events.broadcastEvent(PostInitEvent(app))
+    })
     app.start()
 
 }
@@ -52,8 +55,10 @@ class Application : StateBasedGame("Dino Game v$VERSION") {
     override fun initStatesList(container: GameContainer?) {
         addState(SplashScreen())
         addState(MainMenu())
+        settings = SettingsState()
         addState(settings)
         addState(GameState())
         addState(LostState())
+        eventThreads.forEach(Thread::start)
     }
 }
